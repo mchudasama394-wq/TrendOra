@@ -1,0 +1,270 @@
+/* =============================================================
+   TRENDORA ADMIN – MASTER LAYOUT CSS
+   Sidebar + Topbar + Content Area
+   ============================================================= */
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --sidebar-w:        260px;
+    --sidebar-bg:       #0f1117;
+    --sidebar-border:   #1e2130;
+    --gold:             #D4AF37;
+    --gold-light:       #f0d060;
+    --gold-muted:       rgba(212,175,55,.12);
+    --text-primary:     #f0f0f0;
+    --text-muted:       #8a8fa8;
+    --nav-hover-bg:     rgba(212,175,55,.08);
+    --active-bg:        rgba(212,175,55,.15);
+    --topbar-h:         68px;
+    --body-bg:          #f4f5f7;
+    --card-bg:          #ffffff;
+    --radius:           12px;
+    --shadow:           0 2px 16px rgba(0,0,0,.07);
+    --font:             'Plus Jakarta Sans', sans-serif;
+    --font-serif:       'Cormorant Garamond', serif;
+    --transition:       .22s ease;
+}
+
+html, body { height: 100%; font-family: var(--font); background: var(--body-bg); color: #1a1a2e; }
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ── Admin Shell ── */
+.admin-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ====================================================
+   SIDEBAR
+   ==================================================== */
+.admin-sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    transition: transform var(--transition);
+}
+
+/* Brand Logo */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 24px 20px;
+    border-bottom: 1px solid var(--sidebar-border);
+}
+.sidebar-brand .brand-icon {
+    width: 36px; height: 36px;
+    background: var(--gold);
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 16px; color: #0f1117;
+}
+.sidebar-brand .brand-name {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+}
+.sidebar-brand .brand-name span {
+    color: var(--gold);
+}
+
+/* Nav */
+.sidebar-nav {
+    flex: 1;
+    padding: 20px 14px;
+    overflow-y: auto;
+}
+.nav-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 10px 12px 6px;
+    margin-bottom: 4px;
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    color: var(--text-muted);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+    margin-bottom: 3px;
+}
+.nav-item i {
+    width: 20px;
+    font-size: 15px;
+    text-align: center;
+    transition: color var(--transition);
+}
+.nav-item:hover {
+    background: var(--nav-hover-bg);
+    color: var(--text-primary);
+}
+.nav-item:hover i { color: var(--gold); }
+
+.nav-item.active {
+    background: var(--active-bg);
+    color: var(--gold);
+    font-weight: 600;
+}
+.nav-item.active i { color: var(--gold); }
+
+/* Badge */
+.nav-badge {
+    margin-left: auto;
+    background: var(--gold);
+    color: #0f1117;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Sidebar Footer – Logout */
+.topbar-logout{display:inline-flex;align-items:center;gap:7px;margin-left:18px;padding:9px 12px;border:1px solid #e5e5ea;border-radius:7px;color:#6d7180;font-size:11px;text-decoration:none;transition:color .2s,background .2s,border-color .2s}.topbar-logout:hover{color:#b44d4d;background:#fff4f4;border-color:#f0d5d5}
+.sidebar-footer {
+    padding: 16px 14px;
+    border-top: 1px solid var(--sidebar-border);
+}
+.sidebar-footer .nav-item {
+    color: #e05555;
+    margin-bottom: 0;
+}
+.sidebar-footer .nav-item i { color: #e05555; }
+.sidebar-footer .nav-item:hover {
+    background: rgba(224,85,85,.1);
+    color: #ff6b6b;
+}
+.sidebar-footer .nav-item:hover i { color: #ff6b6b; }
+
+/* ====================================================
+   MAIN CONTENT AREA
+   ==================================================== */
+.admin-main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ── Topbar ── */
+.admin-topbar {
+    position: sticky;
+    top: 0;
+    height: var(--topbar-h);
+    background: var(--card-bg);
+    border-bottom: 1px solid #e8e8ec;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    z-index: 100;
+    box-shadow: 0 1px 8px rgba(0,0,0,.05);
+}
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.topbar-left h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+.topbar-breadcrumb {
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.topbar-breadcrumb span { color: var(--gold); font-weight: 600; }
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.topbar-avatar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+.avatar-circle {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), #b8960e);
+    display: grid; place-items: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f1117;
+}
+.avatar-info .name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a2e;
+    line-height: 1.2;
+}
+.avatar-info .role {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* ── Page Content ── */
+.admin-content {
+    flex: 1;
+    padding: 32px;
+}
+
+/* ── Mobile Sidebar Toggle ── */
+.sidebar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #1a1a2e;
+    cursor: pointer;
+    padding: 4px;
+}
+
+/* ====================================================
+   RESPONSIVE
+   ==================================================== */
+@media (max-width: 900px) {
+    .admin-sidebar {
+        transform: translateX(-100%);
+    }
+    .admin-sidebar.open {
+        transform: translateX(0);
+    }
+    .admin-main {
+        margin-left: 0;
+    }
+    .sidebar-toggle {
+        display: block;
+    }
+    .admin-content {
+        padding: 20px 16px;
+    }
+}

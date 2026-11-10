@@ -1,0 +1,375 @@
+/* ==========================================================================
+   TRENDORA LUXURY DESIGN SYSTEM - ABOUT US DEDICATED STYLESHEET
+   ========================================================================== */
+
+:root {
+    --primary-gold: #D4AF37;
+    --deep-gold: #B59228;
+    --soft-shimmer: #F3E5AB;
+    --silk-alabaster: #FAFAFA;
+    --pure-white: #FFFFFF;
+    --obsidian: #111111;
+    --soft-charcoal: #222222;
+    --border-subtle: rgba(212, 175, 55, 0.25);
+    --border-light: #EAEAEA;
+    --text-muted: #666666;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --transition-luxury: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --shadow-card: 0 15px 35px rgba(0, 0, 0, 0.06);
+}
+
+.section-padding {
+    padding: 90px 0;
+}
+
+.container-luxury {
+    width: 90%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.bg-alabaster {
+    background-color: var(--silk-alabaster);
+}
+
+.section-header.center {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-subtitle {
+    font-size: 0.78rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--primary-gold);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: 2.8rem;
+    font-weight: 500;
+    color: var(--obsidian);
+}
+
+.gold-accent-line {
+    width: 60px;
+    height: 2px;
+    background-color: var(--primary-gold);
+    margin: 18px auto 0 auto;
+}
+
+    .gold-accent-line.align-left {
+        margin-left: 0;
+    }
+
+/* --- 1. HERO BANNER --- */
+.about-hero-section {
+    position: relative;
+    padding: 120px 0;
+    background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.85)), url('https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=1800&auto=format&fit=crop') center/cover no-repeat;
+    color: var(--pure-white);
+    text-align: center;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.about-hero-content {
+    max-width: 850px;
+}
+
+.about-hero-subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--primary-gold);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.about-hero-title {
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.about-hero-desc {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #DDDDDD;
+    font-weight: 300;
+}
+
+/* --- 2. VISION & NARRATIVE GRID --- */
+.vision-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.editorial-heading {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    color: var(--obsidian);
+}
+
+.editorial-body {
+    font-size: 0.98rem;
+    color: var(--soft-charcoal);
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.founder-quote {
+    border-left: 3px solid var(--primary-gold);
+    padding-left: 24px;
+    margin-top: 30px;
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-style: italic;
+    color: var(--obsidian);
+}
+
+    .founder-quote cite {
+        display: block;
+        margin-top: 10px;
+        font-family: var(--font-sans);
+        font-size: 0.78rem;
+        font-style: normal;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--primary-gold);
+    }
+
+.vision-image-frame {
+    position: relative;
+}
+
+.vision-img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    border: 1px solid var(--border-subtle);
+}
+
+.experience-badge {
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    background: var(--obsidian);
+    color: var(--pure-white);
+    padding: 24px 30px;
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.exp-number {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    color: var(--primary-gold);
+    font-weight: 700;
+}
+
+.exp-label {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    max-width: 140px;
+    line-height: 1.4;
+}
+
+/* --- 3. PILLARS --- */
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.pillar-card {
+    background: var(--pure-white);
+    padding: 45px 35px;
+    border: 1px solid var(--border-light);
+    text-align: center;
+    transition: var(--transition-luxury);
+}
+
+    .pillar-card:hover {
+        border-color: var(--primary-gold);
+        box-shadow: var(--shadow-card);
+        transform: translateY(-8px);
+    }
+
+.pillar-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--silk-alabaster);
+    color: var(--primary-gold);
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px auto;
+    border: 1px solid var(--border-subtle);
+}
+
+.pillar-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: var(--obsidian);
+}
+
+.pillar-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+/* --- 4. TIMELINE --- */
+.timeline-wrapper {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+    .timeline-wrapper::after {
+        content: '';
+        position: absolute;
+        width: 2px;
+        background-color: var(--primary-gold);
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+    .timeline-item.left {
+        left: 0;
+        text-align: right;
+    }
+
+    .timeline-item.right {
+        left: 50%;
+        text-align: left;
+    }
+
+.timeline-content {
+    padding: 30px;
+    background: var(--pure-white);
+    border: 1px solid var(--border-light);
+    position: relative;
+}
+
+.timeline-year {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-gold);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.timeline-title {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    color: var(--obsidian);
+}
+
+.timeline-content p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* --- 5. CARE & AUTHENTICITY --- */
+.care-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.care-card {
+    background: var(--pure-white);
+    padding: 40px;
+    border: 1px solid var(--border-subtle);
+    border-top: 3px solid var(--primary-gold);
+}
+
+.care-icon {
+    font-size: 2.2rem;
+    color: var(--primary-gold);
+    margin-bottom: 20px;
+}
+
+.care-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    color: var(--obsidian);
+}
+
+.care-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .vision-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pillars-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-wrapper::after {
+        left: 31px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+        .timeline-item.left, .timeline-item.right {
+            left: 0;
+            text-align: left;
+        }
+
+    .care-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-hero-title {
+        font-size: 2.5rem;
+    }
+
+    .editorial-heading {
+        font-size: 2.2rem;
+    }
+}

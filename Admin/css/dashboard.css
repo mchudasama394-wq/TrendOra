@@ -1,0 +1,255 @@
+/* =============================================================
+   TRENDORA ADMIN – DASHBOARD PAGE CSS
+   Stat Cards, Charts placeholder, Recent Orders Table
+   ============================================================= */
+
+/* ── Page Header ── */
+.page-header {
+    margin-bottom: 28px;
+}
+.page-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+.page-header p {
+    font-size: 13.5px;
+    color: #8a8fa8;
+    margin-top: 4px;
+}
+
+/* ====================================================
+   STAT CARDS
+   ==================================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    border: 1px solid #eff0f3;
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+}
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.1);
+}
+
+.stat-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+.stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #8a8fa8;
+}
+.stat-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    background: rgba(212,175,55,.12);
+    display: grid; place-items: center;
+    font-size: 17px;
+    color: #D4AF37;
+}
+.stat-icon.blue   { background: rgba(59,130,246,.1);  color: #3b82f6; }
+.stat-icon.green  { background: rgba(34,197,94,.1);   color: #22c55e; }
+.stat-icon.purple { background: rgba(168,85,247,.1);  color: #a855f7; }
+
+.stat-value {
+    font-size: 30px;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+.stat-change {
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.stat-change.up   { color: #22c55e; }
+.stat-change.down { color: #ef4444; }
+.stat-change span { color: #8a8fa8; font-weight: 400; }
+
+/* Decorative bottom line */
+.stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #D4AF37, transparent);
+    border-radius: 0 0 14px 14px;
+}
+
+/* ====================================================
+   DASHBOARD BOTTOM GRID
+   ==================================================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+}
+
+/* ── Section Card ── */
+.section-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    border: 1px solid #eff0f3;
+}
+.section-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+.section-action {
+    font-size: 12.5px;
+    color: #D4AF37;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s;
+}
+.section-action:hover { opacity: .7; }
+
+/* ====================================================
+   ORDERS TABLE
+   ==================================================== */
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.orders-table th {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: #8a8fa8;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid #eff0f3;
+}
+.orders-table td {
+    padding: 14px 14px;
+    font-size: 13.5px;
+    color: #1a1a2e;
+    border-bottom: 1px solid #f5f5f7;
+    vertical-align: middle;
+}
+.orders-table tr:last-child td { border-bottom: none; }
+.orders-table tr:hover td { background: #fafafa; }
+
+.order-id    { font-weight: 700; color: #D4AF37; font-family: monospace; }
+.customer-cell { display: flex; align-items: center; gap: 10px; }
+.customer-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D4AF37, #b8960e);
+    display: grid; place-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #0f1117;
+    flex-shrink: 0;
+}
+
+/* Status Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 600;
+}
+.badge-shipped    { background: rgba(34,197,94,.1);  color: #16a34a; }
+.badge-processing { background: rgba(245,158,11,.1); color: #d97706; }
+.badge-delivered  { background: rgba(59,130,246,.1); color: #2563eb; }
+.badge-cancelled  { background: rgba(239,68,68,.1);  color: #dc2626; }
+.badge i { font-size: 9px; }
+
+/* ====================================================
+   QUICK LINKS PANEL (Right Column)
+   ==================================================== */
+.quick-links { display: flex; flex-direction: column; gap: 12px; }
+.quick-link-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid #eff0f3;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+    text-decoration: none;
+    color: inherit;
+}
+.quick-link-item:hover {
+    background: rgba(212,175,55,.05);
+    border-color: rgba(212,175,55,.3);
+}
+.quick-link-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+.quick-link-icon.gold   { background: rgba(212,175,55,.12); color: #D4AF37; }
+.quick-link-icon.blue   { background: rgba(59,130,246,.1);  color: #3b82f6; }
+.quick-link-icon.green  { background: rgba(34,197,94,.1);   color: #22c55e; }
+.quick-link-icon.purple { background: rgba(168,85,247,.1);  color: #a855f7; }
+
+.quick-link-info .ql-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+.quick-link-info .ql-sub {
+    font-size: 11.5px;
+    color: #8a8fa8;
+    margin-top: 2px;
+}
+.quick-link-arrow {
+    margin-left: auto;
+    color: #c0c4d0;
+    font-size: 13px;
+}
+
+/* ====================================================
+   RESPONSIVE
+   ==================================================== */
+@media (max-width: 1100px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 580px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-value { font-size: 24px; }
+}
+@media (max-width: 420px) {
+    .stats-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,144 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.Master.cs" Inherits="TrendOra.Admin.AdminMaster" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trendora Admin ✦ <asp:ContentPlaceHolder ID="PageTitle" runat="server">Dashboard</asp:ContentPlaceHolder></title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Admin Master CSS -->
+    <link href="css/admin_master.css" rel="stylesheet" />
+
+    <!-- Page-specific CSS -->
+    <asp:ContentPlaceHolder ID="PageCSS" runat="server" />
+</head>
+<body>
+    <form id="frmAdmin" runat="server" enctype="multipart/form-data">
+        <div class="admin-shell">
+
+            <!-- ══════════════════════════════════════
+                 SIDEBAR
+            ═══════════════════════════════════════ -->
+            <aside class="admin-sidebar" id="adminSidebar">
+
+                <!-- Brand -->
+                <div class="sidebar-brand">
+                    <div class="brand-icon"><i class="fa-solid fa-gem"></i></div>
+                    <div class="brand-name">TREND<span>ORA</span></div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="sidebar-nav">
+                    <p class="nav-label">Main Menu</p>
+
+                    <a href="Dashboard.aspx" class="nav-item <%= GetActiveClass("Dashboard") %>">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="ManageProducts.aspx" class="nav-item <%= GetActiveClass("ManageProducts") %>">
+                        <i class="fa-solid fa-box-open"></i>
+                        <span>Products</span>
+                    </a>
+
+                    <a href="ManageOrders.aspx" class="nav-item <%= GetActiveClass("ManageOrders") %>">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span>Orders</span>
+                        <span class="nav-badge" id="orderBadge">0</span>
+                    </a>
+
+                    <p class="nav-label" style="margin-top:14px;">Support</p>
+
+                    <a href="ViewCustomers.aspx" class="nav-item <%= GetActiveClass("ViewCustomers") %>">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Customers</span>
+                    </a>
+
+                    <a href="ManageCategories.aspx" class="nav-item <%= GetActiveClass("ManageCategories") %>">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                        <span>Contact Messages</span>
+                    </a>
+
+                </nav>
+
+                <!-- Logout Footer -->
+                <div class="sidebar-footer">
+                    <a href="../Logout.aspx" class="nav-item">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+
+            </aside>
+
+            <!-- ══════════════════════════════════════
+                 MAIN
+            ═══════════════════════════════════════ -->
+            <div class="admin-main">
+
+                <!-- Topbar -->
+                <header class="admin-topbar">
+                    <div class="topbar-left">
+                        <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle Sidebar">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                        <div class="topbar-breadcrumb">
+                            <i class="fa-solid fa-house-chimney" style="font-size:12px;color:#D4AF37;"></i>
+                            <span>/</span>
+                            <span><asp:ContentPlaceHolder ID="BreadcrumbTitle" runat="server">Dashboard</asp:ContentPlaceHolder></span>
+                        </div>
+                    </div>
+                    <div class="topbar-right">
+                        <div class="topbar-avatar">
+                            <div class="avatar-circle" id="avatarCircle">A</div>
+                            <div class="avatar-info">
+                                <div class="name" id="adminName">Admin</div>
+                                <div class="role">Administrator</div>
+                            </div>
+                        </div>
+                        <a href="../Logout.aspx" class="topbar-logout" title="Logout">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </header>
+
+                <!-- Page Content -->
+                <main class="admin-content">
+                    <asp:ContentPlaceHolder ID="PageContent" runat="server" />
+                </main>
+
+            </div>
+        </div>
+    </form>
+
+    <!-- Sidebar toggle JS -->
+    <script>
+        // Sidebar mobile toggle
+        const toggleBtn  = document.getElementById('sidebarToggle');
+        const sidebar    = document.getElementById('adminSidebar');
+        if (toggleBtn && sidebar) {
+            toggleBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+        }
+
+        // Show admin name from session (if passed via hidden field or just use default)
+        const storedName = '<%= Session["UserName"] ?? "Admin" %>';
+        if (storedName && document.getElementById('adminName')) {
+            document.getElementById('adminName').textContent = storedName;
+            const circle = document.getElementById('avatarCircle');
+            if (circle) circle.textContent = storedName.charAt(0).toUpperCase();
+        }
+    </script>
+
+    <asp:ContentPlaceHolder ID="PageScripts" runat="server" />
+</body>
+</html>

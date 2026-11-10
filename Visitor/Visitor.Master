@@ -1,0 +1,317 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Visitor.Master.cs" Inherits="Trendora.Visitor.VisitorMaster" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trendora - Haute Couture & Haute Horlogerie</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- FontAwesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Master CSS -->
+    <link href="css/master.css" rel="stylesheet" type="text/css" />
+
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!-- Overlay backdrop for drawers -->
+        <div id="drawerBackdrop" class="drawer-backdrop"></div>
+
+        <!-- 1. Top Utility Announcement Bar -->
+        <div class="announcement-bar">
+            <div class="announcement-container">
+                <div class="ticker-text">
+                    <span>COMPLIMENTARY EXPRESS SHIPPING ON ORDERS OVER Rs. 4,999</span>
+                    <span class="dot-separator">|</span>
+                    <span>100% ETHICALLY SOURCED MATERIALS & CRAFTSMANSHIP</span>
+                    <span class="dot-separator">|</span>
+                    <span>BOUTIQUE PICKUP NOW AVAILABLE IN MUMBAI & DELHI</span>
+                </div>
+                <div class="utility-links">
+                    <a href="ContactUs.aspx#boutiques"><i class="fa-solid fa-location-dot"></i> Boutique Locator</a>
+                    <a href="../Login.aspx?redirect=track"><i class="fa-solid fa-truck-fast"></i> Track Order</a>
+                    <div class="currency-selector">
+                        <span>Currency: INR</span>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Sticky Glassmorphism Header -->
+        <header id="siteHeader" class="site-header">
+            <div class="header-container">
+                <!-- Mobile Hamburger Button -->
+                <button type="button" id="hamburgerBtn" class="hamburger-btn" aria-label="Toggle Navigation Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <!-- Brand Logo -->
+                <div class="brand-logo">
+                    <a href="VisitorDefault.aspx">
+                        TRENDORA<span class="gold-dot">.</span>
+                    </a>
+                </div>
+
+                <!-- Main Desktop Navigation -->
+                <nav id="mainNav" class="main-nav">
+                    <button type="button" id="mobileNavCloseBtn" class="mobile-nav-close-btn" aria-label="Close Mobile Navigation">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="VisitorDefault.aspx" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="Products.aspx?cat=handbags" class="nav-link">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="AboutUs.aspx" class="nav-link">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="ContactUs.aspx" class="nav-link">Contact Us</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Header Action Hub -->
+                <div class="action-hub">
+                    <div class="header-search-box" aria-label="Search products">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Search" aria-label="Search products" />
+                    </div>
+
+                    <button type="button" id="searchTriggerBtn" class="action-btn search-inline-btn" aria-label="Open Search Collection">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+
+                    <a href="../Login.aspx?returnUrl=Wishlist" class="action-btn badge-btn" aria-label="Wishlist">
+                        <i class="fa-regular fa-heart"></i>
+                        <asp:Label ID="lblWishlistBadge" runat="server" CssClass="badge-counter" Text="0"></asp:Label>
+                    </a>
+
+                    <a href="<%= ResolveUrl("~/Buyer/Cart.aspx") %>" class="action-btn badge-btn" aria-label="Shopping Cart">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="badge-counter"><%= GetCartCount() %></span>
+                    </a>
+
+                    <% if (Session["UserID"] == null) { %>
+                        <a href="../Login.aspx" class="btn-luxury-signin">
+                            <span>Login</span>
+                            <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>
+
+                        <a href="../Register.aspx" class="btn-luxury-register">
+                            <span>Register</span>
+                        </a>
+                    <% } else { %>
+                        <a href="../Buyer/MyAccount.aspx" class="btn-luxury-signin">
+                            <span>Dashboard</span>
+                            <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>
+
+                        <a href="../Logout.aspx" class="btn-luxury-register">
+                            <span>Logout</span>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        </header>
+
+        <!-- 3. Slide-Down Search Overlay Drawer -->
+        <div id="searchDrawer" class="search-drawer">
+            <div class="search-drawer-inner">
+                <button type="button" id="searchCloseBtn" class="drawer-close-btn" aria-label="Close Search Overlay">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="txtHeaderSearch" placeholder="Search handcrafted leather, diamonds, horology..." autocomplete="off" />
+                    <button type="button" class="btn-gold-search">SEARCH</button>
+                </div>
+                <div class="search-trending">
+                    <span class="trending-title">TRENDING SEARCHES:</span>
+                    <a href="Products.aspx?q=monogram+tote" class="trending-tag">Monogram Tote</a>
+                    <a href="Products.aspx?q=18k+gold+necklace" class="trending-tag">18k Gold Necklace</a>
+                    <a href="Products.aspx?q=automatic+chronograph" class="trending-tag">Automatic Chronograph</a>
+                    <a href="Products.aspx?q=cat+eye+sunglasses" class="trending-tag">Cat-Eye Sunglasses</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Off-Canvas Mini Cart Drawer -->
+        <div id="miniCartDrawer" class="mini-cart-drawer">
+            <div class="cart-drawer-header">
+                <h3>YOUR SHOPPING BAG (<asp:Label ID="lblCartDrawerCount" runat="server" Text="0"></asp:Label>)</h3>
+                <button type="button" id="cartCloseBtn" class="drawer-close-btn" aria-label="Close Mini Cart">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Free Shipping Progress Tracker -->
+            <div class="shipping-progress-container">
+                <p class="shipping-msg">Add <strong class="gold-highlight">₹1,500.00</strong> more to unlock Complimentary Express Delivery.</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 70%;"></div>
+                </div>
+            </div>
+
+            <div class="cart-drawer-body">
+                <div class="cart-items-wrapper">
+                    <!-- Sample Luxury Cart Item 1 -->
+                    <div class="cart-item">
+                        <img src="../images/products/handbag_1.jpg" alt="Aurelia Gold Chain Flap Bag" class="cart-item-img" onerror="this.src='https://via.placeholder.com/100x120/111111/D4AF37?text=TRENDORA';" />
+                        <div class="cart-item-details">
+                            <span class="cart-item-category">Handbags</span>
+                            <h4 class="cart-item-title">Aurelia Gold Chain Flap Bag</h4>
+                            <span class="cart-item-variant">Color: Obsidian Black Leather</span>
+                            <div class="cart-item-price-qty">
+                                <div class="qty-selector">
+                                    <button type="button" class="qty-btn minus">-</button>
+                                    <input type="text" class="qty-input" value="1" readonly />
+                                    <button type="button" class="qty-btn plus">+</button>
+                                </div>
+                                <span class="cart-item-price">₹12,490</span>
+                            </div>
+                        </div>
+                        <button type="button" class="cart-item-remove" title="Remove Item"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+
+                    <!-- Sample Luxury Cart Item 2 -->
+                    <div class="cart-item">
+                        <img src="../images/products/jewelry_1.jpg" alt="Celeste Diamond Solitaire Pendant" class="cart-item-img" onerror="this.src='https://via.placeholder.com/100x120/111111/D4AF37?text=TRENDORA';" />
+                        <div class="cart-item-details">
+                            <span class="cart-item-category">Fine Jewelry</span>
+                            <h4 class="cart-item-title">Celeste Solitaire Pendant</h4>
+                            <span class="cart-item-variant">Material: 18k Rose Gold</span>
+                            <div class="cart-item-price-qty">
+                                <div class="qty-selector">
+                                    <button type="button" class="qty-btn minus">-</button>
+                                    <input type="text" class="qty-input" value="1" readonly />
+                                    <button type="button" class="qty-btn plus">+</button>
+                                </div>
+                                <span class="cart-item-price">₹28,900</span>
+                            </div>
+                        </div>
+                        <button type="button" class="cart-item-remove" title="Remove Item"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-drawer-footer">
+                <div class="cart-summary-line">
+                    <span>Subtotal</span>
+                    <span class="subtotal-amount">₹41,390</span>
+                </div>
+                <p class="tax-note">Taxes and duties calculated during secure checkout.</p>
+                <a href="../Login.aspx?returnUrl=Checkout" class="btn-luxury-checkout">
+                    <span>PROCEED TO CHECKOUT</span>
+                    <i class="fa-solid fa-shield-halved"></i>
+                </a>
+                <a href="VisitorDefault.aspx" class="continue-shopping">Or Continue Shopping</a>
+            </div>
+        </div>
+
+        <!-- 5. Main Content Wrapper -->
+        <main class="main-content-wrapper">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </main>
+
+        <!-- 6. Ultra-Rich 4-Column Luxury Footer -->
+        <footer class="site-footer">
+            <div class="footer-top-container">
+                <div class="footer-grid">
+                    <!-- Col 1: Brand Legacy -->
+                    <div class="footer-col brand-col">
+                        <h2 class="footer-brand-title">TRENDORA<span class="gold-dot">.</span></h2>
+                        <p class="footer-narrative">
+                            Crafting timeless elegance for the modern connoisseur. Every creation embodies meticulous artisan craftsmanship, unyielding luxury, and ethical responsibility.
+                        </p>
+                        <div class="social-links-wrapper">
+                            <a href="#" class="social-icon-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="social-icon-btn" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+                            <a href="#" class="social-icon-btn" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                            <a href="#" class="social-icon-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Col 2: Quick Links -->
+                    <div class="footer-col">
+                        <h4 class="footer-col-title">THE COLLECTIONS</h4>
+                        <ul class="footer-links-list">
+                            <li><a href="Products.aspx?cat=handbags">Handcrafted Leather Bags</a></li>
+                            <li><a href="Products.aspx?cat=jewelry">Fine Jewelry & Diamonds</a></li>
+                            <li><a href="Products.aspx?cat=watches">Swiss Automatic Timepieces</a></li>
+                            <li><a href="Products.aspx?cat=sunglasses">Designer Eyewear</a></li>
+                            <li><a href="Products.aspx?cat=new">New Atelier Arrivals</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Col 3: Customer Care -->
+                    <div class="footer-col">
+                        <h4 class="footer-col-title">CLIENT CONCIERGE</h4>
+                        <ul class="footer-links-list">
+                            <li><a href="ContactUs.aspx">Complimentary Shipping & Returns</a></li>
+                            <li><a href="AboutUs.aspx#care">Product Care & Restoration</a></li>
+                            <li><a href="AboutUs.aspx#authenticity">Authenticity & Certificate Guarantee</a></li>
+                            <li><a href="ContactUs.aspx#faq">Frequently Asked Questions</a></li>
+                            <li><a href="ContactUs.aspx#appointment">Book a Boutique Appointment</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Col 4: Privilege Club Newsletter -->
+                    <div class="footer-col newsletter-col">
+                        <h4 class="footer-col-title">THE PRIVILEGE CLUB</h4>
+                        <p class="newsletter-desc">Subscribe to receive private invitations to new collection debuts, limited releases, and bespoke atelier events.</p>
+                        <div class="newsletter-form-card">
+                            <div class="input-group">
+                                <input type="email" id="txtNewsletterEmail" placeholder="Enter your email address..." class="newsletter-input" />
+                                <button type="button" class="btn-join-privilege">JOIN PRIVILEGE</button>
+                            </div>
+                            <span class="privacy-notice">By subscribing, you agree to our Privacy Policy & Terms.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Sub-Bar -->
+            <div class="footer-bottom-bar">
+                <div class="footer-bottom-container">
+                    <div class="copyright-text">
+                        &copy; <%= DateTime.Now.Year %> TRENDORA HAUTE COUTURE. All Rights Reserved.
+                    </div>
+                    <div class="sub-legal-links">
+                        <a href="#">Privacy Policy</a>
+                        <span class="divider">•</span>
+                        <a href="#">Terms of Service</a>
+                        <span class="divider">•</span>
+                        <a href="#">Cookie Preferences</a>
+                    </div>
+                    <div class="payment-methods-svg">
+                        <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                        <i class="fa-brands fa-cc-mastercard" title="MasterCard"></i>
+                        <i class="fa-brands fa-cc-amex" title="American Express"></i>
+                        <i class="fa-brands fa-cc-apple-pay" title="Apple Pay"></i>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Master JavaScript -->
+        <script src="js/master.js"></script>
+
+        <asp:ContentPlaceHolder ID="ScriptContent" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>
