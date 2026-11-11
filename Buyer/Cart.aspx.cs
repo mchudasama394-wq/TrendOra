@@ -107,5 +107,107 @@ namespace TrendOra.Buyer
             GridView1.EditIndex = -1;
             fillCart();
         }
+
+        protected void btnCheckout_Click(object sender, EventArgs e)
+        {
+            string userId = Convert.ToString(Session["UserID"]);
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                Response.Redirect("../Login.aspx");
+                return;
+            }
+
+            using (SqlConnection connection = new SqlConnection(s))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    DataTable cartItems = new DataTable();
+                    using (SqlCommand cartCommand = new SqlCommand(
+                        "SELECT c.Cart_Prod_Id, c.Quantity, p.ProductName, p.Price " +
+                        "FROM cart_tbl c WITH (UPDLOCK, HOLDLOCK) " +
+                        "INNER JOIN Products p ON c.Cart_Prod_Id = p.ProductId " +
+                        "WHERE c.Cart_User_Id = @userId", connection, transaction))
+                    {
+                        cartCommand.Parameters.Add("@userId", SqlDbType.NVarChar, 150).Value = userId;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cartCommand))
+                        {
+                            adapter.Fill(cartItems);
+                        }
+                    }
+
+                    if (cartItems.Rows.Count == 0)
+                    {
+                        transaction.Rollback();
+                        lblCartMessage.Text = "Your cart is empty.";
+                        return;
+                    }
+
+                    decimal grandTotal = 0;
+                    foreach (DataRow item in cartItems.Rows)
+                    {
+                        grandTotal += Convert.ToDecimal(item["Price"]) * Convert.ToInt32(item["Quantity"]);
+                    }
+
+                    int orderId;
+                    using (SqlCommand orderCommand = new SqlCommand(
+                        "INSERT INTO order_tbl (user_id, user_name, order_date, order_total_amount, order_payment_method, order_status) " +
+                        "VALUES (@userId, @userName, GETDATE(), @total, @paymentMethod, @status); " +
+                        "SELECT CAST(SCOPE_IDENTITY() AS int);", connection, transaction))
+                    {
+                        orderCommand.Parameters.Add("@userId", SqlDbType.NVarChar, 150).Value = userId;
+                        orderCommand.Parameters.Add("@userName", SqlDbType.NVarChar, 150).Value =
+                            Convert.ToString(Session["UserName"]) ?? string.Empty;
+                        orderCommand.Parameters.Add("@total", SqlDbType.Decimal).Value = grandTotal;
+                        orderCommand.Parameters["@total"].Precision = 18;
+                        orderCommand.Parameters["@total"].Scale = 2;
+                        orderCommand.Parameters.Add("@paymentMethod", SqlDbType.NVarChar, 50).Value = "Cash on Delivery";
+                        orderCommand.Parameters.Add("@status", SqlDbType.NVarChar, 30).Value = "Pending";
+                        orderId = Convert.ToInt32(orderCommand.ExecuteScalar());
+                    }
+
+                    foreach (DataRow item in cartItems.Rows)
+                    {
+                        int quantity = Convert.ToInt32(item["Quantity"]);
+                        decimal unitPrice = Convert.ToDecimal(item["Price"]);
+
+                        using (SqlCommand itemCommand = new SqlCommand(
+                            "INSERT INTO order_item_tbl (Order_id, prod_id, product_name, quantity, unit_price, line_total) " +
+                            "VALUES (@orderId, @productId, @productName, @quantity, @unitPrice, @lineTotal)", connection, transaction))
+                        {
+                            itemCommand.Parameters.Add("@orderId", SqlDbType.Int).Value = orderId;
+                            itemCommand.Parameters.Add("@productId", SqlDbType.Int).Value = Convert.ToInt32(item["Cart_Prod_Id"]);
+                            itemCommand.Parameters.Add("@productName", SqlDbType.NVarChar, 200).Value = Convert.ToString(item["ProductName"]);
+                            itemCommand.Parameters.Add("@quantity", SqlDbType.Int).Value = quantity;
+                            itemCommand.Parameters.Add("@unitPrice", SqlDbType.Decimal).Value = unitPrice;
+                            itemCommand.Parameters["@unitPrice"].Precision = 18;
+                            itemCommand.Parameters["@unitPrice"].Scale = 2;
+                            itemCommand.Parameters.Add("@lineTotal", SqlDbType.Decimal).Value = unitPrice * quantity;
+                            itemCommand.Parameters["@lineTotal"].Precision = 18;
+                            itemCommand.Parameters["@lineTotal"].Scale = 2;
+                            itemCommand.ExecuteNonQuery();
+                        }
+                    }
+
+                    using (SqlCommand clearCartCommand = new SqlCommand(
+                        "DELETE FROM cart_tbl WHERE Cart_User_Id = @userId", connection, transaction))
+                    {
+                        clearCartCommand.Parameters.Add("@userId", SqlDbType.NVarChar, 150).Value = userId;
+                        clearCartCommand.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                    Response.Redirect("OrderDetails.aspx?id=" + orderId, false);
+                    Context.ApplicationInstance.CompleteRequest();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
     }
 }

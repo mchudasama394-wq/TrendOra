@@ -24,7 +24,7 @@
         .cart-total { display:block; margin:0; padding:26px 28px; border-top:1px solid #e8e3d9; color:#1e1d24; font-size:23px; font-weight:800; letter-spacing:.2px; text-align:right; }
         .cart-total:before { content:'Order total  '; color:#98939a; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; }
         .cart-checkout { display:flex; justify-content:flex-end; padding:0 28px 27px; }
-        .checkout-button { display:inline-flex; align-items:center; gap:10px; padding:13px 21px; border-radius:6px; background:#171820; color:#fff; font-size:11px; font-weight:800; letter-spacing:.7px; text-decoration:none; text-transform:uppercase; transition:background .2s ease, transform .2s ease; }
+        .checkout-button { display:inline-flex; align-items:center; gap:10px; padding:13px 21px; border:0; border-radius:6px; background:#171820; color:#fff; font-family:inherit; font-size:11px; font-weight:800; letter-spacing:.7px; text-decoration:none; text-transform:uppercase; cursor:pointer; transition:background .2s ease, transform .2s ease; }
         .checkout-button:hover { background:#b18a1a; color:#fff; transform:translateY(-1px); }
         @media (max-width:700px) { .cart-page{padding:44px 0 70px}.cart-heading{display:block;margin-bottom:25px}.cart-heading h1{font-size:39px}.cart-heading p{margin-top:13px;text-align:left}.cart-table-wrap{overflow-x:auto}.cart-table{min-width:760px}.cart-card{border-radius:10px}.cart-total{font-size:19px}.cart-checkout{justify-content:stretch;padding:0 18px 22px}.checkout-button{width:100%;justify-content:center} }
     </style>
@@ -70,7 +70,8 @@
                 </div>
                 <asp:Label ID="lblGrandTotal" runat="server" CssClass="cart-total" />
                 <div class="cart-checkout">
-                    <a href="#" class="checkout-button" onclick="return false;">Proceed to Checkout <i class="fa-solid fa-arrow-right"></i></a>
+                    <asp:Button ID="btnCheckout" runat="server" CssClass="checkout-button" Text="Proceed to Checkout" OnClick="btnCheckout_Click" />
+                    <asp:Label ID="lblCartMessage" runat="server" />
                 </div>
             </div>
         </div>

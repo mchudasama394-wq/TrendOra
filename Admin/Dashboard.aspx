@@ -45,6 +45,9 @@
                 <i class="fa-solid fa-arrow-trend-up"></i>
                 <span>all time</span>
             </div>
+            <div style="margin-top:14px;">
+                <asp:Button ID="btnDownloadAllOrdersReport" runat="server" Text="Download All Orders Report" OnClick="btnDownloadAllOrdersReport_Click" style="width:100%;padding:10px 12px;border:1px solid #d7c88e;border-radius:6px;background:#f9f3df;color:#8e6d12;font-weight:800;cursor:pointer;" />
+            </div>
         </div>
 
         <div class="stat-card">
